@@ -35,10 +35,10 @@ include('get_cicero_info.php');
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
         var marker = new google.maps.Marker({
-      position: azavea,
-      map: map,
-      title:"Address that Cicero geocoded!"
-  });
+          position: azavea,
+          map: map,
+          title:"Address that Cicero geocoded!"
+        });
 
         var districtoverlay = new google.maps.GroundOverlay(
             map_data_from_php.district_map_image_data.url,

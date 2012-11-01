@@ -16,6 +16,7 @@ function get_response($url, $postfields=''){
     return json_decode($json);//take the JSON response we just got and format it for PHP
 }
 
+// @return array of $token_info
 function get_cicero_token($username, $password){
     //urlencode data before sending it to Cicero
     $username_enc = urlencode($username);
@@ -34,6 +35,7 @@ function get_cicero_token($username, $password){
     return $token_info;
 }
 
+// @return array of $map_info
 function get_map_info_by_location_and_district_type($token_info, $search_loc, $district_type='STATE_LOWER'){
     //urlencode our data
     $search_loc_enc = urlencode($search_loc);
@@ -59,6 +61,7 @@ function get_map_info_by_location_and_district_type($token_info, $search_loc, $d
 
 }
 
+// @return JSON encoded array
 function get_district_map($token_info, $map_info){
     $query_string = "${map_info['unique_district_id']}?token=${token_info['token']}&user=${token_info['user']}&include_image_data&srs=4326&width=500&height=500&format=json";
     $map_url = "http://cicero.azavea.com/v3.1/map/$query_string";

@@ -23,7 +23,7 @@ function get_cicero_token($username, $password){
     $password = urlencode($password);
 
     // Obtain a token:
-    $response = get_response('http://cicero.azavea.com/v3.1/token/new.json', "username=$username_enc&password=$password_enc");
+    $response = get_response('http://cicero.azavea.com/v3.1/token/new.json', "username=$username&password=$password");
 
     // Check to see if the token was obtained okay:
     if($response->success != True):
@@ -37,23 +37,23 @@ function get_cicero_token($username, $password){
 
 // @return array of $map_info
 function get_map_info_by_location_and_district_type($token_info, $search_loc, $district_type='STATE_LOWER'){
-    //urlencode our data
+    
     $search_loc = urlencode($search_loc);
     $district_type = urlencode($district_type);
 
-    $query_string = "search_loc=$search_loc_enc&token=${token_info['token']}&user=${token_info['user']}&district_type=$district_type_enc&format=json";
-    $official_response = get_response("http://cicero.azavea.com/v3.1/official?$query_string");
+    $query_string = "search_loc=$search_loc&token=${token_info['token']}&user=${token_info['user']}&district_type=$district_type&format=json";
+    $official_response = get_response("https://cicero.azavea.com/v3.1/official?$query_string");
 
-    if(count($official_response->response->results->candidates) == 0):
+    $candidates = $official_response->response->results->candidates;
+    if(count($candidates) == 0):
         die('No location found for the given address.');
     endif;
 
     //we will center the map on the search location
-    $lat_long_of_search_loc = array("lat_y" => $official_response->response->results->candidates[0]->y,
-                                    "long_x" => $official_response->response->results->candidates[0]->x);
+    $lat_long_of_search_loc = array("lat_y" => $candidates[0]->y,
+                                    "long_x" => $candidates[0]->x);
 
-    //the easy way. Another way would be to get State, country, and district_id
-    $unique_district_id = $official_response->response->results->candidates[0]->officials[0]->office->district->id;
+    $unique_district_id = $candidates[0]->officials[0]->office->district->id;
 
     $map_info = array("lat_long" => $lat_long_of_search_loc, "unique_district_id" => $unique_district_id);
 

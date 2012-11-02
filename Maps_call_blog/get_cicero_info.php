@@ -65,15 +65,14 @@ function get_map_info_by_location_and_district_type($token_info, $search_loc, $d
 function get_district_map($token_info, $map_info){
     $query_string = "${map_info['unique_district_id']}?token=${token_info['token']}&user=${token_info['user']}&include_image_data&srs=4326&width=500&height=500&format=json";
     $map_url = "http://cicero.azavea.com/v3.1/map/$query_string";
-    //echo $map_url;
+    
     $map_response = get_response($map_url);
     $map_list = $map_response->response->results->maps[0];
-    //echo $map_list;
+    
     if(count($map_list) > 0):
         $district_map_image_data = $map_response->response->results->maps[0];
     else:
         die('No map found for the given unique_district_id.');
-        //$district_map_image_data = json_encode(array("url" => "No ")
     endif;
 
     return json_encode(array("center_lat_long" => $map_info['lat_long'], "district_map_image_data" => $district_map_image_data));

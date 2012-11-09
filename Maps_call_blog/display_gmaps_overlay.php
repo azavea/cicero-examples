@@ -28,6 +28,7 @@ include('get_cicero_info.php');
 
         var mapOptions = {
           zoom: 13,
+          maxZoom: 16,
           center: azavea,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }

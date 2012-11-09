@@ -41,7 +41,7 @@ include('get_cicero_info.php');
         });
 
         var districtoverlay = new google.maps.GroundOverlay(
-            map_data_from_php.district_map_image_data.url,
+            map_data_from_php.district_map_image_data.img_src,
             imageBounds);
         districtoverlay.setMap(map);
       }

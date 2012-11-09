@@ -17,8 +17,8 @@ include('get_cicero_info.php');
     <script type="text/javascript">
       function initialize() {
         var map_data_from_php = <?php echo $map_data_for_javascript; ?> ;
-        var center_lat = map_data_from_php.center_lat_long["lat_y"];
-        var center_long = map_data_from_php.center_lat_long["long_x"];
+        var center_lat = map_data_from_php.center_lat_long.lat_y;
+        var center_long = map_data_from_php.center_lat_long.long_x;
         var azavea = new google.maps.LatLng(center_lat, center_long);
         var imageBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(map_data_from_php.district_map_image_data.extent.y_min,
